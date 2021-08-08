@@ -2,8 +2,8 @@ import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:x_system/model/LeftMenu.dart';
 import 'package:http/http.dart' as http;
+import 'package:x_system/model/left_menu.dart';
 
 class LeftMenuWidget extends StatefulWidget {
   const LeftMenuWidget({Key? key}) : super(key: key);
@@ -44,20 +44,27 @@ class _LeftMenuState extends State<LeftMenuWidget> {
   Future<LeftMenu> _getLeftMenu() async {
     final response = await http.post(
         Uri.parse('https://www.fair999.com/member-market/sat/left-menu.json'),
-        body: {
+        body: jsonEncode(<String,dynamic>{
           "type": "SPORTS",
           "selectedId": 0,
           "sportId": 0,
           "tzone": "GMT+05:30"
-        });
+        }));
     print('////////////////////////////////////');
     if (response.statusCode == 200) {
       // If the server did return a 200 OK response,
       // then parse the JSON.
-      return compute(parse, response.body);
+      print('200');
+
+      print('ok : ${response.body.toString()}');
+      // return compute(parse, response.body);
+      // var a = jsonDecode(response.body);
+      return LeftMenu.fromJson(jsonDecode(response.body));
     } else {
       // If the server did not return a 200 OK response,
       // then throw an exception.
+      print('200');
+
       throw Exception('Failed to load album');
     }
   }

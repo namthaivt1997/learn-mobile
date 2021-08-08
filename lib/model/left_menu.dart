@@ -1,6 +1,6 @@
 class LeftMenu {
   final String groupName;
-  final List<Items> items;
+  final List<dynamic> items;
   final dynamic upItems;
 
   LeftMenu(
